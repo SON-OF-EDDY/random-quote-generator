@@ -1,0 +1,29 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press Start 2P&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<div id="main-container">
+    <h1>DRAW A DIGIT</h1>
+<canvas id="drawingCanvas" width="400" height="400"></canvas>
+<canvas id="tempCanvas" width="400" height="400" style="display: none;"></canvas>
+
+    <br><button id="clearButton" class="button-27">Clear</button>
+    <br>
+    <button id="saveButton" class="button-27">Submit</button>
+    <br>
+    <!-- HTML !-->
+
+    <h2 id="prediction-tag">Prediction:</h2>
+<br>
+</div>
+
+<script src="{% static 'scripts/draw.js' %}"></script>
+</body>
+</html>
