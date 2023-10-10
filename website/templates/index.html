@@ -194,6 +194,8 @@ saveButton.addEventListener("click", () => {
 
     var imageUrl = finalImageDataURL;
 
+    console.log(imageUrl);
+
     fetch(`/process_image/?image_url=${encodeURIComponent(imageUrl)}`)
                 .then(response => response.json())
                 .then(data => {

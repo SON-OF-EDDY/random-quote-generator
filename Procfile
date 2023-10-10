@@ -1,1 +1,1 @@
-web: gunicorn mysite.wsgi
+web: gunicorn --limit-request-line 8190 mysite.wsgi
