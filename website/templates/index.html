@@ -168,6 +168,22 @@ function stopDrawing() {
 }
 
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // Function to save the canvas content as an image with a white background
 const saveButton = document.getElementById("saveButton");
 //const savedImage = document.getElementById("savedImage");
@@ -192,22 +208,40 @@ saveButton.addEventListener("click", () => {
 
     //imageDataURLInput.value = finalImageDataURL;
 
-    var imageUrl = finalImageDataURL;
+    // Store the Data URL as a variable
+    let imageDataUrl = finalImageDataURL;
 
-    console.log(imageUrl);
+     console.log(imageDataUrl);
 
-    fetch(`/process_image/?image_url=${encodeURIComponent(imageUrl)}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response from the Django view
-                    console.log(data);
-                    predictionTag.innerHTML = `Prediction: ${data['prediction']}`;
-                    // You can display a success message or perform other actions here
-                })
-                .catch(error => {
-                    console.log('some error...');
-                    console.log(error);
-                });
+    // Create a JavaScript object to send in the request body
+    const data = {
+        image_url: imageDataUrl,
+    };
+
+    console.log(data);
+
+    let csrf_token = getCookie('csrftoken');
+    console.log(csrf_token);
+
+    fetch(`/process_image/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+             'X-CSRFToken': csrf_token,// Set the appropriate content type
+        },
+        body: JSON.stringify(data), // Send the data as a JSON string in the request body
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from the Django view
+        console.log(data);
+        predictionTag.innerHTML = `Prediction: ${data['prediction']}`;
+        // You can display a success message or perform other actions here
+    })
+    .catch(error => {
+        console.log('some error...');
+        console.log(error);
+    });
 });
 
 

@@ -8,6 +8,7 @@ import requests
 from PIL import Image
 import base64
 import io
+import json
 
 # Create your views here.
 
@@ -30,9 +31,18 @@ def preprocess_custom_digit_image(image, target_size=(28, 28)):
     return preprocessed_image
 
 def process_image(request):
+    # Access the JSON data from the request body
+    try:
+        data = json.loads(request.body)
+        image_url = data.get('image_url')
+        # Now, image_url contains the value of 'image_url' from the JSON data
+        # You can use it as needed in your view
+        #return JsonResponse({'image url':image_url})
+    except json.JSONDecodeError as e:
+        return JsonResponse({'status': 'error', 'message': 'Invalid JSON data','e':str(e)})
 
-    image_url = request.GET.get('image_url')
-
+    # image_url = request.POST.get('data')
+    #
     import torch.nn as nn
     import torch.nn.functional as F
     import torch.optim as optim
@@ -64,30 +74,52 @@ def process_image(request):
     network = Net()
     network.load_state_dict(checkpoint)
     network.eval()
+    #
+    # # Decode the Data URL to get image data
 
-    # Decode the Data URL to get image data
+    ####################################################################################################################
+    ####################################################################################################################
     try:
         _, encoded_data = image_url.split(',', 1)
         image_data = base64.b64decode(encoded_data)
+        #return JsonResponse({'image data': image_data})
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': 'Invalid Data URL'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid Data URL','e':str(e)})
 
+    ####################################################################################################################
+    ####################################################################################################################
+
+    # try:
+    #     _, encoded_data = image_url.split(',', 1)
+    #     image_data = base64.b64decode(encoded_data)
+    #
+    #     # Encode the binary image data as base64 and convert it to a string
+    #     image_data_base64 = base64.b64encode(image_data).decode('utf-8')
+    #
+    #     return JsonResponse({'image_data': image_data_base64})
+    # except Exception as e:
+    #     return JsonResponse({'status': 'error', 'message': 'Invalid Data URL', 'e': str(e)})
+
+    #
     # Convert the image data to a PIL Image
     try:
         image_data = Image.open(io.BytesIO(image_data)).convert('L')  # 'L' mode for grayscale
+        #return JsonResponse({'message': 'going well so far...'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': 'Failed to process the image'})
-
-    # Preprocess the image using your custom function
+    #
+    # # Preprocess the image using your custom function
     input_image = preprocess_custom_digit_image(np.array(image_data))  # Convert PIL Image to numpy array
 
-    # Convert the numpy array to a PyTorch tensor
+    #
+    # # Convert the numpy array to a PyTorch tensor
     input_image = torch.tensor(input_image, dtype=torch.float32)
 
+    #
     network.eval()
     with torch.no_grad():
         output = network(input_image)
-
+    #
     predicted_class = torch.argmax(output, dim=1).item()
-
-    return JsonResponse({'status': 'success', 'message': 'Image processing complete','url': image_url,'KPI':model_checkpoint_path,'prediction':predicted_class})
+    #
+    return JsonResponse({'status': 'success', 'message': 'Image processing complete','prediction':predicted_class})
