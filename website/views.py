@@ -9,6 +9,8 @@ from PIL import Image
 import base64
 import io
 import json
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 
@@ -30,6 +32,7 @@ def preprocess_custom_digit_image(image, target_size=(28, 28)):
 
     return preprocessed_image
 
+@csrf_exempt
 def process_image(request):
     # Access the JSON data from the request body
     try:

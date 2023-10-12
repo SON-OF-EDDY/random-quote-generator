@@ -238,14 +238,14 @@ saveButton.addEventListener("click", () => {
 
     console.log(data);
 
-    let csrf_token = getCookie('csrftoken');
-    console.log(csrf_token);
+    //let csrf_token = getCookie('csrftoken');
+    //console.log(csrf_token);
 
     fetch(`/process_image/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-             'X-CSRFToken': csrf_token,// Set the appropriate content type
+             //'X-CSRFToken': csrf_token,// Set the appropriate content type
         },
         body: JSON.stringify(data), // Send the data as a JSON string in the request body
     })
