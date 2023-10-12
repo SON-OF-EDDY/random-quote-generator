@@ -25,6 +25,7 @@
             height: 100vh;
             width: 50%;
             margin: 0 auto;
+
         }
 
         #drawingCanvas {
@@ -82,26 +83,29 @@
         @media (max-width: 768px) {
             //make all the text on the page smaller...
             h1 {
-                font-size: 20px; /* Adjust the font size as needed */
+                font-size: 16px; /* Adjust the font size as needed */
             }
 
             body {
-                font-size: 14px; /* Adjust the font size as needed */
+                font-size: 12px; /* Adjust the font size as needed */
             }
 
             .button-27 {
-                font-size: 10px; /* Adjust the font size for the buttons as needed */
+                font-size: 10px;
+                 width: 75%;/* Adjust the font size for the buttons as needed */
             }
         }
-
-
     </style>
+
+
 </head>
 <body>
+
 <div id="main-container">
     <h1>DRAW A DIGIT</h1>
-<canvas id="drawingCanvas" width="200" height="200"></canvas>
-<canvas id="tempCanvas" width="200" height="200" style="display: none;"></canvas>
+<canvas id="drawingCanvas" width="175" height="175"></canvas>
+
+<canvas id="tempCanvas" width="175" height="175" style="display: none;"></canvas>
 
     <br><button id="clearButton" class="button-27">Clear</button>
     <br>
@@ -119,7 +123,7 @@
     const canvas = document.getElementById("drawingCanvas");
 const context = canvas.getContext("2d");
 context.strokeStyle = 'white';
-context.lineWidth = 10;
+context.lineWidth = 8;
 let isDrawing = false;
 
 // Event listeners for both mouse and touch events
