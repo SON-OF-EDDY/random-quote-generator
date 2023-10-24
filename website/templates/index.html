@@ -3,274 +3,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press Start 2P&display=swap">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-        h1 {
-            color: gray;
-            text-align: center;
-        }
-
-        body {
-            background-color: white;
-            font-family: 'Press Start 2P', sans-serif;
-        }
-
-        #main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            width: 50%;
-            margin: 0 auto;
-
-        }
-
-        #drawingCanvas {
-            display: block;
-            margin: 0 auto;
-            border: 2px solid gray;
-            background: black;
-        }
-
-
-
-        /* Button Styles */
-        .button-27 {
-            appearance: none;
-            background-color: gray;
-            border: 2px solid #1A1A1A;
-            border-radius: 15px;
-            box-sizing: border-box;
-            color: #FFFFFF;
-            cursor: pointer;
-            display: inline-block;
-            font-family: 'Press Start 2P';
-            font-size: 16px;
-            font-weight: 600;
-            line-height: normal;
-            margin: 0;
-            min-height: 60px;
-            min-width: 0;
-            outline: none;
-            padding: 16px 24px;
-            text-align: center;
-            text-decoration: none;
-            transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            width: 50%;
-            will-change: transform;
-        }
-
-        .button-27:disabled {
-            pointer-events: none;
-        }
-
-        .button-27:hover {
-            box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-            transform: translateY(-2px);
-        }
-
-        .button-27:active {
-            box-shadow: none;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            //make all the text on the page smaller...
-            h1 {
-                font-size: 16px; /* Adjust the font size as needed */
-            }
-
-            body {
-                font-size: 12px; /* Adjust the font size as needed */
-            }
-
-            .button-27 {
-                font-size: 10px;
-                 width: 75%;/* Adjust the font size for the buttons as needed */
-            }
-        }
-    </style>
-
-
 </head>
+
+
 <body>
 
 <div id="main-container">
-    <h1>DRAW A DIGIT</h1>
-<canvas id="drawingCanvas" width="175" height="175"></canvas>
 
-<canvas id="tempCanvas" width="175" height="175" style="display: none;"></canvas>
+    <h1>RANDOM QUOTE GENERATOR</h1>
 
-    <br><button id="clearButton" class="button-27">Clear</button>
+    <h4>{{quote}}</h4>
+    <h5>{{author}}</h5>
+
     <br>
-    <button id="saveButton" class="button-27">Submit</button>
-    <br>
-    <!-- HTML !-->
+    <form method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+        <button type="submit">Generate Random Quote</button>
+    </form>
 
-    <h2>Prediction:</h2>
-    <h2 id="prediction-tag"></h2>
-<br>
 </div>
 
-<!-- <script type="text/javascript" src="{% static 'scripts/draw.js' %}"></script> -->
-<script>
-    const canvas = document.getElementById("drawingCanvas");
-const context = canvas.getContext("2d");
-context.strokeStyle = 'white';
-context.lineWidth = 8;
-let isDrawing = false;
-
-// Event listeners for both mouse and touch events
-canvas.addEventListener("mousedown", startDrawing);
-canvas.addEventListener("touchstart", startDrawing);
-
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("touchmove", draw);
-
-canvas.addEventListener("mouseup", stopDrawing);
-canvas.addEventListener("touchend", stopDrawing);
-
-canvas.addEventListener("mouseout", stopDrawing);
-
-// Touch events need to prevent the default touch actions to work properly
-canvas.addEventListener("touchstart", (event) => {
-    event.preventDefault();
-});
-canvas.addEventListener("touchmove", (event) => {
-    event.preventDefault();
-});
-
-function startDrawing(event) {
-    isDrawing = true;
-    context.beginPath();
-
-    if (event.type === "touchstart") {
-        const touch = event.touches[0];
-        const x = touch.clientX - canvas.getBoundingClientRect().left;
-        const y = touch.clientY - canvas.getBoundingClientRect().top;
-        context.moveTo(x, y);
-    } else {
-        const x = event.clientX - canvas.getBoundingClientRect().left;
-        const y = event.clientY - canvas.getBoundingClientRect().top;
-        context.moveTo(x, y);
-    }
-}
-
-function draw(event) {
-    if (!isDrawing) return;
-
-    if (event.type === "touchmove") {
-        event.preventDefault();
-        const touch = event.touches[0];
-        const x = touch.clientX - canvas.getBoundingClientRect().left;
-        const y = touch.clientY - canvas.getBoundingClientRect().top;
-        context.lineTo(x, y);
-    } else {
-        const x = event.clientX - canvas.getBoundingClientRect().left;
-        const y = event.clientY - canvas.getBoundingClientRect().top;
-        context.lineTo(x, y);
-    }
-
-    context.stroke();
-}
-
-function stopDrawing() {
-    isDrawing = false;
-    context.closePath();
-}
-
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-// Function to save the canvas content as an image with a white background
-const saveButton = document.getElementById("saveButton");
-//const savedImage = document.getElementById("savedImage");
-const tempCanvas = document.getElementById("tempCanvas");
-//const imageDataURLInput = document.getElementById("imageDataURL"); // Added
-
-saveButton.addEventListener("click", () => {
-    // Create a temporary context for the temporary canvas
-    const tempContext = tempCanvas.getContext("2d");
-    const predictionTag = document.getElementById('prediction-tag');
-
-    // Draw a white background on the temporary canvas
-    tempContext.fillStyle = "#000000"; // White color
-    tempContext.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
-    // Draw the existing canvas content on top of the white background
-    tempContext.drawImage(canvas, 0, 0);
-
-    // Capture the temporary canvas content as an image URL
-    const finalImageDataURL = tempCanvas.toDataURL("image/png");
-    //savedImage.src = finalImageDataURL;
-
-    //imageDataURLInput.value = finalImageDataURL;
-
-    // Store the Data URL as a variable
-    let imageDataUrl = finalImageDataURL;
-
-     console.log(imageDataUrl);
-
-    // Create a JavaScript object to send in the request body
-    const data = {
-        image_url: imageDataUrl,
-    };
-
-    console.log(data);
-
-    //let csrf_token = getCookie('csrftoken');
-    //console.log(csrf_token);
-
-    fetch(`/process_image/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-             //'X-CSRFToken': csrf_token,// Set the appropriate content type
-        },
-        body: JSON.stringify(data), // Send the data as a JSON string in the request body
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the response from the Django view
-        console.log(data);
-        predictionTag.innerHTML = `${data['prediction']}`;
-        // You can display a success message or perform other actions here
-    })
-    .catch(error => {
-        console.log('some error...');
-        console.log(error);
-    });
-});
-
-
-// Function to clear the canvas
-const clearButton = document.getElementById("clearButton");
-clearButton.addEventListener("click", () => {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    //savedImage.src = '';
-    //savedImage.classList.remove("image-with-border");
-    //downloadLink.hidden = true;
-});
-</script>
 </body>
 </html>
