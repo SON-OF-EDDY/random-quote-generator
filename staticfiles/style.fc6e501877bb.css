@@ -1,0 +1,44 @@
+h1 {
+    color:gray;
+    text-align:center;
+}
+
+h4,h5 {
+    text-align:center;
+}
+
+body {
+    font-family: 'Press Start 2P', sans-serif;/* Use a shade of grey, adjust as needed */
+}
+
+button {
+    font-family: 'Press Start 2P', sans-serif;
+        padding: 10px 20px; /* Add padding to increase size (top/bottom: 10px, left/right: 20px) */
+/* Use a shade of grey, adjust as needed */
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: flex-start; /* Center vertically */
+    height: 100vh;/* Make the container take the full viewport height */
+    width: 50%;
+    margin: 0 auto;
+    /*border: 2px solid black; /* Add a black border with 1px width */
+}
+
+/* Media query for mobile devices (e.g., screens with a maximum width of 768px) */
+@media (max-width: 768px) {
+    h4 {
+        font-size: 10px; /* Decrease font size for mobile devices */
+    }
+
+    h5 {
+        font-size: 8px; /* Decrease font size for mobile devices */
+    }
+
+    #main-container {
+        width: 90%; /* Change the width for mobile devices */
+    }
+}
