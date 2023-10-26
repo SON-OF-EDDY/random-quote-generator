@@ -3,7 +3,12 @@ h1 {
     text-align:center;
 }
 
-h4,h5 {
+h5,h6 {
+    text-align:center;
+}
+
+h4 {
+    color:gray;
     text-align:center;
 }
 
@@ -28,6 +33,27 @@ button {
     /*border: 2px solid black; /* Add a black border with 1px width */
 }
 
+form {
+    font-family: 'Press Start 2P', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+}
+
+/* Optional: Add some spacing between form elements */
+form label,
+form input,
+form button {
+    margin-bottom: 10px;
+    text-align: center;
+    margin: 0 auto;/* Adjust the value to control the spacing between elements */
+}
+
+form input[type="text"] {
+    font-family: 'Press Start 2P', sans-serif;
+}
+
 /* Media query for mobile devices (e.g., screens with a maximum width of 768px) */
 @media (max-width: 768px) {
     h4 {
@@ -42,3 +68,4 @@ button {
         width: 90%; /* Change the width for mobile devices */
     }
 }
+

@@ -14,14 +14,27 @@
 
     <h1>RANDOM QUOTE GENERATOR</h1>
 
-    <h4>{{quote}}</h4>
-    <h5>{{author}}</h5>
+    <h5>{{quote}}</h5>
+    <h6>{{author}}</h6>
 
     <br>
     <form method="post" action="{% url 'index' %}">
         {% csrf_token %}
-        <button type="submit">Generate Random Quote</button>
+        <button type="submit" name="random_quote">Generate Random Quote</button>
     </form>
+
+
+    <br><br><br><br>
+
+
+    <h4>Search for a quote by someone:</h4>
+
+    <form method="post" action="{% url 'index' %}">
+    {% csrf_token %}
+    <input type="text" id="your_input" name="your_input_name" placeholder="Enter name here..." required>
+        <br>
+    <button type="submit" name="search_quote">Search</button>
+</form>
 
 </div>
 
