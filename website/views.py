@@ -22,10 +22,9 @@ def index(request):
         except requests.exceptions.RequestException as e:
             return HttpResponse(f"An error occurred: {e}", content_type="text/plain", status=500)
 
-
     else:
-        quote = 'NO QUOTES YET!'
-        author = 'NO AUTHOR!'
+        quote = ''
+        author = ''
 
     return render(request,'index.html',{
         'quote':quote,
