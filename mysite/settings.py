@@ -16,7 +16,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['hydetesting2.win','web-production-245f.up.railway.app']
 #ALLOWED_HOSTS = ["https://web-production-245f.up.railway.app","web-production-245f.up.railway.app","hyde-api.win","www.hyde-api.win"]
 #CSRF_TRUSTED_ORIGINS = ["https://web-production-245f.up.railway.app","web-production-245f.up.railway.app","hyde-api.win","www.hyde-api.win"]
-CSRF_TRUSTED_ORIGINS = ['https://hydetesting2.win','web-production-245f.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://hydetesting2.win','web-production-245f.up.railway.app','https://web-production-245f.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
