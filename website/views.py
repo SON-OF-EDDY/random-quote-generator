@@ -11,7 +11,7 @@ def index(request):
 
         if 'random_quote' in request.POST:
 
-            api_url = "https://fastapi-production-a6e1.up.railway.app/get-random/"
+            api_url = "https://fastapi-production-6e77.up.railway.app/get-random/"
 
             try:
                 response = requests.get(api_url)
@@ -31,7 +31,7 @@ def index(request):
 
             search_query = request.POST['your_input_name']
 
-            api_url = f"https://fastapi-production-a6e1.up.railway.app/get-by-author/?author={search_query}"
+            api_url = f"https://fastapi-production-6e77.up.railway.app/get-by-author/?author={search_query}"
 
             try:
                 response = requests.get(api_url)
