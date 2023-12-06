@@ -13,10 +13,10 @@ SECRET_KEY = 'django-insecure-zxejxwm9zfybbb_dr9r24uz@qxxa&%53(aqc3(j^24#ai871uc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hydetesting2.win']
+ALLOWED_HOSTS = ['hydetesting2.win','web-production-245f.up.railway.app']
 #ALLOWED_HOSTS = ["https://web-production-245f.up.railway.app","web-production-245f.up.railway.app","hyde-api.win","www.hyde-api.win"]
 #CSRF_TRUSTED_ORIGINS = ["https://web-production-245f.up.railway.app","web-production-245f.up.railway.app","hyde-api.win","www.hyde-api.win"]
-CSRF_TRUSTED_ORIGINS = ['https://hydetesting2.win']
+CSRF_TRUSTED_ORIGINS = ['https://hydetesting2.win','web-production-245f.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
